@@ -1,0 +1,60 @@
+# Node dependencies
+node_modules/
+**/.eslintcache
+
+# Build outputs
+dist/
+build/
+out/
+coverage/
+.next/
+.next/cache/
+.turbo/
+.vercel/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs and temp
+logs/
+*.log
+*.pid
+*.seed
+*.pid.lock
+tmp/
+temp/
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Uploads and runtime storage
+backend/uploads/
+frontend/public/uploads/
+
+# Docker data (if using bind mounts)
+docker-data/
+
+# MongoDB local database files (WiredTiger)
+WiredTiger
+WiredTiger.*
+WiredTigerHS.wt
+*.wt
+storage.bson
+sizeStorer.wt
+_mdb_catalog.wt
+diagnostic.data/
+journal/
+_tmp/
+mongod.lock
+
+# Misc
+*.iml
