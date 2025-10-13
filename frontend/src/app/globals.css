@@ -25,34 +25,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Custom gradient animations */
-@keyframes gradient-x {
-  0%, 100% {
-    transform: translateX(-100%);
-  }
-  50% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes gradient-faster {
-  0%, 100% {
-    transform: translateX(-100%) scale(1.1);
-  }
-  50% {
-    transform: translateX(100%) scale(1.1);
-  }
-}
-
-.animate-gradient-x {
-  animation: gradient-x 3s ease-in-out infinite;
-  background-size: 400% 400%;
-}
-
-.animate-gradient-faster {
-  animation: gradient-faster 1.5s ease-in-out infinite;
-  background-size: 400% 400%;
-}
+/* Removed gradient animations - using hover effects instead */
 
 /* Glass morphism effects */
 .glass {
@@ -69,20 +42,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Background gradient for pages */
+/* Static black gradient background for pages */
 .gradient-bg {
   background: linear-gradient(135deg, 
-    #667eea 0%, 
-    #764ba2 25%, 
-    #f093fb 50%, 
-    #f5576c 75%, 
-    #4facfe 100%);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+    #1a1a1a 0%, 
+    #2d2d2d 25%, 
+    #1a1a1a 50%, 
+    #0f0f0f 75%, 
+    #000000 100%);
 }

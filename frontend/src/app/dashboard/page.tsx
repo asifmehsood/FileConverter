@@ -51,7 +51,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="text-center mt-12">
-            <button className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200 text-lg">
+            <button className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg transition-all duration-300 hover:from-purple-600 hover:to-pink-600 hover:shadow-lg hover:shadow-purple-500/25 text-lg">
               Start Converting Files
             </button>
           </div>
