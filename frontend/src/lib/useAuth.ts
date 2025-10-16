@@ -12,6 +12,11 @@ interface VerifyData {
   code: string;
 }
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,5 +51,24 @@ export const useAuth = () => {
     }
   };
 
-  return { signup, verify, loading, error };
+  const login = async (data: LoginData) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await api.post('/auth/login', data);
+      // Store token if login is successful
+      if (response.data.token) {
+        localStorage.setItem('authToken', response.data.token);
+      }
+      return response.data;
+    } catch (err: any) {
+      const message = err.response?.data?.message || 'Login failed';
+      setError(message);
+      throw new Error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { signup, verify, login, loading, error };
 };

@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/lib/useAuth';
 
 export default function SignupPage() {
@@ -104,7 +105,7 @@ export default function SignupPage() {
                 />
               </div>
             </div>
-            <div className="pt-2">
+            <div className="pt-2 space-y-4">
               <button
                 type="submit"
                 disabled={loading}
@@ -112,6 +113,14 @@ export default function SignupPage() {
               >
                 {loading ? 'Creating Account…' : 'Create Account'}
               </button>
+              <div className="text-center">
+                <p className="text-white/70 text-sm">
+                  Already have an account?{' '}
+                  <Link href="/signin" className="text-white font-semibold hover:text-purple-300 transition-colors">
+                    Sign In
+                  </Link>
+                </p>
+              </div>
             </div>
           </form>
         ) : (
