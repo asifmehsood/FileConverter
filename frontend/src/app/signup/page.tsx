@@ -12,34 +12,90 @@ export default function SignupPage() {
   const [name, setName] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [message, setMessage] = useState('');
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
   
   const { signup, verify, loading, error } = useAuth();
   const router = useRouter();
 
+  // Validation functions
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password: string) => {
+    return password.length >= 6;
+  };
+
+  const validateForm = () => {
+    const errors: {[key: string]: string} = {};
+
+    if (!email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!validateEmail(email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (!validatePassword(password)) {
+      errors.password = 'Password must be at least 6 characters long';
+    }
+
+    if (!confirmPassword) {
+      errors.confirmPassword = 'Please confirm your password';
+    } else if (password !== confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+    setMessage('');
+    
+    // Validate form before submission
+    if (!validateForm()) {
+      setMessage('Please fix the errors below');
       return;
     }
     
     try {
-      await signup({ email, password, name: name || undefined });
+      await signup({ 
+        email: email.trim(), 
+        password, 
+        name: name.trim() || undefined 
+      });
       setMessage('Verification code sent to your email!');
       setStep('verify');
+      setValidationErrors({});
     } catch (err) {
-      setMessage(error || 'Signup failed');
+      setMessage(error || 'Signup failed. Please try again.');
     }
   };
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMessage('');
+    
+    if (!verificationCode.trim()) {
+      setMessage('Please enter the verification code');
+      return;
+    }
+
+    if (verificationCode.length !== 6) {
+      setMessage('Verification code must be 6 digits');
+      return;
+    }
+    
     try {
-      await verify({ email, code: verificationCode });
-      setMessage('Account verified successfully!');
-      setTimeout(() => router.push('/dashboard'), 2000);
+      await verify({ email, code: verificationCode.trim() });
+      setMessage('Account verified successfully! Redirecting to sign in...');
+      setTimeout(() => router.push('/signin'), 2000);
     } catch (err) {
-      setMessage(error || 'Verification failed');
+      setMessage(error || 'Verification failed. Please check your code and try again.');
     }
   };
 
@@ -65,11 +121,19 @@ export default function SignupPage() {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (validationErrors.email) {
+                      setValidationErrors(prev => ({...prev, email: ''}));
+                    }
+                  }}
                   required
-                  className="input-glass w-full px-5 py-4 rounded-xl text-base"
+                  className={`input-glass w-full px-5 py-4 rounded-xl text-base ${validationErrors.email ? 'border-red-400 border-2' : ''}`}
                   placeholder="you@example.com"
                 />
+                {validationErrors.email && (
+                  <p className="text-red-300 text-sm mt-2">{validationErrors.email}</p>
+                )}
               </div>
               <div className="md:col-span-2">
                 <label className="block text-white text-sm font-medium mb-2 tracking-wide">Full Name (Optional)</label>
@@ -86,23 +150,39 @@ export default function SignupPage() {
                 <input
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (validationErrors.password) {
+                      setValidationErrors(prev => ({...prev, password: ''}));
+                    }
+                  }}
                   required
                   minLength={6}
-                  className="input-glass w-full px-5 py-4 rounded-xl text-base"
+                  className={`input-glass w-full px-5 py-4 rounded-xl text-base ${validationErrors.password ? 'border-red-400 border-2' : ''}`}
                   placeholder="••••••••"
                 />
+                {validationErrors.password && (
+                  <p className="text-red-300 text-sm mt-2">{validationErrors.password}</p>
+                )}
               </div>
               <div>
                 <label className="block text-white text-sm font-medium mb-2 tracking-wide">Confirm Password</label>
                 <input
                   type="password"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    if (validationErrors.confirmPassword) {
+                      setValidationErrors(prev => ({...prev, confirmPassword: ''}));
+                    }
+                  }}
                   required
-                  className="input-glass w-full px-5 py-4 rounded-xl text-base"
+                  className={`input-glass w-full px-5 py-4 rounded-xl text-base ${validationErrors.confirmPassword ? 'border-red-400 border-2' : ''}`}
                   placeholder="••••••••"
                 />
+                {validationErrors.confirmPassword && (
+                  <p className="text-red-300 text-sm mt-2">{validationErrors.confirmPassword}</p>
+                )}
               </div>
             </div>
             <div className="pt-2 space-y-4">
