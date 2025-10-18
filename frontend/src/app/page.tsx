@@ -236,6 +236,80 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 py-12 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            {/* Company Info */}
+            <div className="md:col-span-1">
+              <h3 className="text-2xl font-bold text-white mb-4">FileConverter</h3>
+              <p className="text-white/70 mb-4">
+                The most trusted file conversion platform. Fast, secure, and reliable.
+              </p>
+              <div className="flex space-x-4">
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white hover:from-purple-600 hover:to-pink-600 transition-all duration-300">
+                  <span className="text-sm">📘</span>
+                </a>
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white hover:from-blue-600 hover:to-purple-600 transition-all duration-300">
+                  <span className="text-sm">🐦</span>
+                </a>
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center text-white hover:from-pink-600 hover:to-red-600 transition-all duration-300">
+                  <span className="text-sm">📸</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li><Link href="/" className="text-white/70 hover:text-white transition-colors">Home</Link></li>
+                <li><Link href="/converters" className="text-white/70 hover:text-white transition-colors">Converters</Link></li>
+                <li><Link href="/about" className="text-white/70 hover:text-white transition-colors">About Us</Link></li>
+                <li><Link href="/contact" className="text-white/70 hover:text-white transition-colors">Contact</Link></li>
+                <li><Link href="/signup" className="text-white/70 hover:text-white transition-colors">Sign Up</Link></li>
+              </ul>
+            </div>
+
+            {/* File Types */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">File Types</h4>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">PDF Converter</a></li>
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">Image Converter</a></li>
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">Audio Converter</a></li>
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">Video Converter</a></li>
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">Document Converter</a></li>
+              </ul>
+            </div>
+
+            {/* Support */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Support</h4>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">Help Center</a></li>
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">FAQ</a></li>
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="text-white/70 hover:text-white transition-colors">API Documentation</a></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-white/60 text-sm mb-4 md:mb-0">
+              © 2025 FileConverter. All rights reserved.
+            </p>
+            <div className="flex space-x-6 text-sm">
+              <a href="#" className="text-white/60 hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="text-white/60 hover:text-white transition-colors">Terms</a>
+              <a href="#" className="text-white/60 hover:text-white transition-colors">Cookies</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
