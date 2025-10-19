@@ -19,9 +19,10 @@ export default function SigninPage() {
     try {
       await login({ email, password });
       setMessage('Sign in successful! Redirecting...');
-      setTimeout(() => router.push('/dashboard'), 1500);
-    } catch (err) {
-      setMessage(error || 'Sign in failed');
+      setTimeout(() => router.push('/converters'), 1500);
+    } catch (err: any) {
+      // The error message from useAuth hook will contain the backend message
+      setMessage(error || err.message || 'Sign in failed');
     }
   };
 
@@ -45,7 +46,12 @@ export default function SigninPage() {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (message) {
+                  setMessage('');
+                }
+              }}
               required
               className="input-glass w-full px-5 py-4 rounded-xl text-base"
               placeholder="you@example.com"
@@ -59,7 +65,12 @@ export default function SigninPage() {
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (message) {
+                  setMessage('');
+                }
+              }}
               required
               className="input-glass w-full px-5 py-4 rounded-xl text-base"
               placeholder="••••••••"

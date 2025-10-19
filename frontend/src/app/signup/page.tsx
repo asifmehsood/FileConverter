@@ -5,16 +5,14 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/useAuth';
 
 export default function SignupPage() {
-  const [step, setStep] = useState<'signup' | 'verify'>('signup');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
-  const [verificationCode, setVerificationCode] = useState('');
   const [message, setMessage] = useState('');
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
   
-  const { signup, verify, loading, error } = useAuth();
+  const { signup, loading, error } = useAuth();
   const router = useRouter();
 
   // Validation functions
@@ -55,6 +53,7 @@ export default function SignupPage() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage('');
+    setValidationErrors({});
     
     // Validate form before submission
     if (!validateForm()) {
@@ -68,34 +67,12 @@ export default function SignupPage() {
         password, 
         name: name.trim() || undefined 
       });
-      setMessage('Verification code sent to your email!');
-      setStep('verify');
+      setMessage('Account created successfully! Redirecting to sign in...');
       setValidationErrors({});
-    } catch (err) {
-      setMessage(error || 'Signup failed. Please try again.');
-    }
-  };
-
-  const handleVerify = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setMessage('');
-    
-    if (!verificationCode.trim()) {
-      setMessage('Please enter the verification code');
-      return;
-    }
-
-    if (verificationCode.length !== 6) {
-      setMessage('Verification code must be 6 digits');
-      return;
-    }
-    
-    try {
-      await verify({ email, code: verificationCode.trim() });
-      setMessage('Account verified successfully! Redirecting to sign in...');
       setTimeout(() => router.push('/signin'), 2000);
-    } catch (err) {
-      setMessage(error || 'Verification failed. Please check your code and try again.');
+    } catch (err: any) {
+      // The error message from useAuth hook will contain the backend message
+      setMessage(error || err.message || 'Signup failed. Please try again.');
     }
   };
 
@@ -104,17 +81,14 @@ export default function SignupPage() {
       <div className="glass-3d p-10 w-full max-w-xl">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold tracking-tight text-white mb-3">
-            {step === 'signup' ? 'Create Your Account' : 'Verify Your Email'}
+            Create Your Account
           </h1>
           <p className="text-white/70 text-lg">
-            {step === 'signup' 
-              ? 'Unlock full access to powerful file conversion tools.' 
-              : 'Enter the 6-digit code we sent to your email.'}
+            Unlock full access to powerful file conversion tools.
           </p>
         </div>
 
-        {step === 'signup' ? (
-          <form onSubmit={handleSignup} className="space-y-7">
+        <form onSubmit={handleSignup} className="space-y-7">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="md:col-span-2">
                 <label className="block text-white text-sm font-medium mb-2 tracking-wide">Email Address</label>
@@ -125,6 +99,9 @@ export default function SignupPage() {
                     setEmail(e.target.value);
                     if (validationErrors.email) {
                       setValidationErrors(prev => ({...prev, email: ''}));
+                    }
+                    if (message) {
+                      setMessage('');
                     }
                   }}
                   required
@@ -203,45 +180,6 @@ export default function SignupPage() {
               </div>
             </div>
           </form>
-        ) : (
-          <form onSubmit={handleVerify} className="space-y-8">
-            <div className="text-center">
-              <p className="text-white/70 mb-6 text-lg">
-                A 6-digit code was sent to
-                <br />
-                <span className="font-semibold text-white">{email}</span>
-              </p>
-            </div>
-            <div>
-              <label className="block text-white text-sm font-medium mb-3 tracking-wide">Verification Code</label>
-              <input
-                type="text"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
-                required
-                maxLength={6}
-                className="input-glass code-input w-full px-6 py-5 rounded-xl text-3xl font-semibold tracking-[0.6em] text-center"
-                placeholder="000000"
-              />
-            </div>
-            <div className="space-y-4">
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-gradient w-full py-4 px-6 text-white font-semibold rounded-xl text-lg disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Verifying…' : 'Verify Account'}
-              </button>
-              <button
-                type="button"
-                onClick={() => setStep('signup')}
-                className="btn-outline-light w-full py-3 px-5 rounded-xl text-white font-medium"
-              >
-                ← Back to Sign Up
-              </button>
-            </div>
-          </form>
-        )}
 
         {message && (
           <div className={`mt-10 p-5 rounded-xl text-center text-sm font-medium tracking-wide border ${

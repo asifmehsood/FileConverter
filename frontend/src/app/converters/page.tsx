@@ -25,7 +25,7 @@ export default function ConvertersPage() {
             <div className="glass p-6 rounded-xl text-center">
               <div className="text-4xl mb-4">🖼️</div>
               <h3 className="text-xl font-semibold text-white mb-2">Image Converter</h3>
-              <p className="text-white/70 mb-4">JPG, PNG, GIF, WebP, SVG</p>
+              <p className="text-white/70 mb-4">JPG, PNG, GIF, WebP, SVG Conversions</p>
               <button className="px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg transition-all duration-300 hover:from-green-600 hover:to-blue-600 hover:shadow-lg hover:shadow-green-500/25">
                 Convert Now
               </button>
