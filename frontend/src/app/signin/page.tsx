@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/useAuth';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function SigninPage() {
   const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ export default function SigninPage() {
   const [message, setMessage] = useState('');
   
   const { login, loading, error } = useAuth();
+  const { setUser } = useAuthContext();
   const router = useRouter();
 
   const handleSignin = async (e: React.FormEvent) => {
@@ -17,7 +19,11 @@ export default function SigninPage() {
     setMessage('');
     
     try {
-      await login({ email, password });
+      const response = await login({ email, password });
+      // Set user data in auth context
+      if (response.user) {
+        setUser(response.user);
+      }
       setMessage('Sign in successful! Redirecting...');
       setTimeout(() => router.push('/converters'), 1500);
     } catch (err: any) {

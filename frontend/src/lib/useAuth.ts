@@ -56,9 +56,12 @@ export const useAuth = () => {
     setError(null);
     try {
       const response = await api.post('/auth/login', data);
-      // Store token if login is successful
+      // Store token and user data if login is successful
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token);
+      }
+      if (response.data.user) {
+        localStorage.setItem('userData', JSON.stringify(response.data.user));
       }
       return response.data;
     } catch (err: any) {
