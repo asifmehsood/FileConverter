@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function ConvertersPage() {
   return (
     <div className="min-h-screen gradient-bg">
@@ -13,14 +15,14 @@ export default function ConvertersPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="glass p-6 rounded-xl text-center">
-              <div className="text-4xl mb-4">📄</div>
+            <Link href="/document-converter" className="glass p-6 rounded-xl text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group cursor-pointer">
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📄</div>
               <h3 className="text-xl font-semibold text-white mb-2">Document Converter</h3>
-              <p className="text-white/70 mb-4">PDF, DOCX, TXT, RTF conversions</p>
-              <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg transition-all duration-300 hover:from-blue-600 hover:to-purple-600 hover:shadow-lg hover:shadow-blue-500/25">
+              <p className="text-white/70 mb-4">PDF, DOCX, PPTX, XLSX conversions</p>
+              <div className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg transition-all duration-300 hover:from-blue-600 hover:to-purple-600 hover:shadow-lg hover:shadow-blue-500/25 inline-block">
                 Convert Now
-              </button>
-            </div>
+              </div>
+            </Link>
 
             <div className="glass p-6 rounded-xl text-center">
               <div className="text-4xl mb-4">🖼️</div>
